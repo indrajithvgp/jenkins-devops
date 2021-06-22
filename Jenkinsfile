@@ -1,32 +1,36 @@
 pipeline{
-	agent any
-		stages{
-			stage("A Stage"){
-				steps{
-					echo "A Stage"
+	// agent any
+	agent {
+		docker {image 'node:alpine'}
+	}
+	stages{
+		stage("A Stage"){
+			steps{
+				echo "A Stage"
+				sh 'node -v'
 				}
 			}
-			stage("B Stage"){
+		stage("B Stage"){
 				steps{
 					echo "B Stage"
 				}
-			}
-			stage("C Stage"){
+			}	
+		stage("C Stage"){
 				steps{
 					echo "C Stage"
 					echo "hola..!"
 				}
-			}
+			}	
+	}
+	post{
+		always{
+			echo "always"
 		}
-		post{
-			always{
-				echo "always"
-			}
-			success{
-				echo "success"
-			}
-			failure{
-				echo "failure"
-			}
+		success{
+			echo "success"
 		}
-}
+		failure{
+			echo "failure"
+		}
+	}
+}	
